@@ -1,75 +1,42 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat en Tiempo Real</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        #messages { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
-        .message { padding: 5px; border-bottom: 1px solid #ddd; }
-    </style>
+    <title>Enviar Correo</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
-
-    <h1>Chat en Tiempo Real</h1>
-    <div id="messages"></div>
-
-    <form id="message-form">
-        <input type="text" id="name" placeholder="Tu nombre" required>
-        <input type="text" id="message" placeholder="Escribe un mensaje" required>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Nombre" required>
+        <input type="email" id="email" placeholder="Correo" required>
+        <textarea id="message" placeholder="Mensaje" required></textarea>
         <button type="submit">Enviar</button>
     </form>
 
     <script>
-        // Tu configuración de Firebase
-        var firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_PROYECTO.firebaseapp.com",
-            databaseURL: "https://TU_PROYECTO.firebaseio.com",
-            projectId: "TU_PROYECTO",
-            storageBucket: "TU_PROYECTO.appspot.com",
-            messagingSenderId: "TU_ID_MENSAJES",
-            appId: "TU_APP_ID"
-        };
-        // Inicializa Firebase
-        firebase.initializeApp(firebaseConfig);
+        // Inicializa EmailJS
+        (function(){
+            emailjs.init("service_1src6se"); // Reemplaza con tu user ID de EmailJS
+        })();
 
-        // Referencia a la base de datos
-        var db = firebase.database();
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío del formulario
 
-        // Escuchar nuevos mensajes en tiempo real
-        db.ref('messages').on('child_added', function(snapshot) {
-            var message = snapshot.val();
-            displayMessage(message.name, message.text);
-        });
+            const templateParams = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
 
-        // Enviar un nuevo mensaje
-        document.getElementById('message-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            var name = document.getElementById('name').value;
-            var text = document.getElementById('message').value;
-            
-            // Guardar el mensaje en la base de datos
-            db.ref('messages').push({
-                name: name,
-                text: text
+            emailjs.send('service_1src6se', 'template_byog2fi', templateParams)
+            .then(function(response) {
+                console.log('Éxito!', response.status, response.text);
+            }, function(error) {
+                console.log('Error', error);
             });
-
-            document.getElementById('message').value = ''; // Limpiar el campo de mensaje
         });
-
-        // Mostrar mensaje en el chat
-        function displayMessage(name, text) {
-            var messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.textContent = name + ": " + text;
-            document.getElementById('messages').appendChild(messageDiv);
-        }
     </script>
-
 </body>
 </html>
