@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #content {
+            width: 100%;
+            height: 80vh; /* Ajusta la altura según sea necesario */
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-    hola mundo
+    <h1>Hola Mundo</h1>
+    <button id="updateButton">Actualizar Contenido</button>
+    <iframe id="content" src="https://danieldaniel123456789.github.io/huevos.github.io"></iframe>
+
+    <script>
+        document.getElementById('updateButton').addEventListener('click', function() {
+            const iframe = document.getElementById('content');
+            // Verificar si hay conexión a Internet
+            if (navigator.onLine) {
+                iframe.src = iframe.src; // Recargar el iframe
+                alert('Contenido actualizado');
+            } else {
+                alert('No hay conexión a Internet');
+            }
+        });
+    </script>
 </body>
 </html>
