@@ -1,0 +1,29 @@
+
+
+     git init
+         git add .
+         git commit -m "actualizacion "
+         git remote add origin https://DanielCostaRica@bitbucket.org/DanielCostaRica/dc.git
+         //este dato se obtener al seleccionar la url; se dirige al proyecto en el servidor
+         git push -u origin viernes
+
+         git remote add origin  https://DanielCostaRica@bitbucket.org/DanielCostaRica/apiingles.git
+
+git merge --> Unir ramas
+git merge master --no-ff       --> primero me posiono en la rama la cual quiero actualizar, y me jala los datos de la rama master a la rama en la cual estoy posicionado
+
+pasar datos de x rama hacia la rama master (la rama master debe estar actualizada)--> me paso a la rama master y hace git merge daniel03
+    me posiciono en la rama que quiero subir-->  git branch -M [MOMBRE DE LA RAMA] 
+nos movemos a la rama master--->  git branch -M master
+estando en la master--> git merge origin/viernes
+
+git checkout master
+git merge cabecera
+
+----------------------------------- 
+Crear una rama nueva-->git branch gitHub
+Pasar de una rama a otra-->git checkout experimental
+Borrado de la rama en local-->git branch -d rama_a_borrar
+forzar Borrado de la rama en local-->git branch -D rama_a_borrar
+Eliminar un branch en remoto--> git push origin --delete rama_a_borrar
+
